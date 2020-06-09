@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>This is my app.</h1>
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+  <script>
+  window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
+  if (loaded) {
+    initializeCastApi();
+  } else {
+    console.log(errorInfo);
+  }
+}
+  </script>
+</body>
+</html>

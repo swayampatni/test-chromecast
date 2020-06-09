@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+  <script>
+  // On device selection
+  function receiverListener(e) {
+    if( e === chrome.cast.ReceiverAvailability.AVAILABLE) {
+    }
+  }
+  // On launch
+  function onRequestSessionSuccess(e) {
+    session = e;
+  }
+  // Session management
+  function sessionListener(e) {
+    session = e;
+    if (session.media.length != 0) {
+      onMediaDiscovered('onRequestSessionSuccess', session.media[0]);
+    }
+  }
+  // Init
+  initializeCastApi = function() {
+    console.log('Initialised…');
+    // Uses default receiver ID
+    var sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+    var apiConfig = new chrome.cast.ApiConfig(sessionRequest,
+      sessionListener,
+      receiverListener);
+    chrome.cast.initialize(apiConfig, onInitSuccess, onError);
+  };
+  // Chromecast API available listener
+  window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
+    if (loaded) {
+      initializeCastApi();
+    } else {
+      console.log(errorInfo);
+    }
+  }
+  </script>
+</body>
+</html>
